@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cy.chengyou.daos.StationDAO">
+    <sql id="station_columns">
+        st.id,
+		st.createDate,
+		st.modifyDate,
+		st.code,
+		st.name,
+		st.phonetic,
+		st.firstPhonetic,
+		st.isIntercity,
+		st.longitude,
+		st.latitude,
+		st.cityCode,
+		st.districtCode
+    </sql>
+
+    <resultMap id="Station" type="com.cy.chengyou.dtos.Station">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+        <result column="code" jdbcType="VARCHAR" property="code" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="phonetic" jdbcType="VARCHAR" property="phonetic" />
+        <result column="firstPhonetic" jdbcType="VARCHAR" property="firstPhonetic" />
+        <result column="isIntercity" jdbcType="BOOLEAN" property="isIntercity"/>
+        <result column="longitude" property="longitude"/>
+        <result column="latitude" property="latitude"/>
+        <result column="cityCode" jdbcType="VARCHAR" property="cityCode"/>
+        <result column="districtCode" jdbcType="VARCHAR" property="districtCode"/>
+        <association property="city" column="{cityCode=cityCode}" foreignColumn="code" select="com.cy.chengyou.daos.CityDAO.findCity" fetchType="lazy">
+        </association>
+        <association property="district" column="{districtCode=districtCode}" foreignColumn="code" select="com.cy.chengyou.daos.DistrictDAO.findDistrict" fetchType="lazy">
+        </association>
+    </resultMap>
+
+    <select id="findByStaId" resultMap="Station">
+        select
+        <include refid="station_columns"/>
+        from station st where st.id = #{id}
+    </select>
+
+    <select id="findStation" resultMap="Station">
+        select
+        <include refid="station_columns"/>
+        from station st
+        <where>
+            <if test="stationCode != null">
+                and st.code = #{stationCode}
+            </if>
+            <if test="stationName != null">
+                and st.name = #{stationName}
+            </if>
+            <if test="cityCode != null">
+                and st.cityCode = #{cityCode}
+            </if>
+            <if test="isIntercity != null">
+                and st.isIntercity = #{isIntercity}
+            </if>
+            <if test="districtCode != null">
+                and st.districtCode = #{districtCode}
+            </if>
+            <if test="phonetic != null">
+                and st.phonetic like "%"#{phonetic}"%"
+            </if>
+            <if test="firstPhonetic != null">
+                and st.firstPhonetic like "%"#{firstPhonetic}"%"
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertStation" parameterType="com.cy.chengyou.dtos.Station">
+        insert into Station(code, name, phonetic, firstPhonetic, isIntercity, longitude, latitude, cityCode, districtCode, createDate, modifyDate)
+        values (#{code}, #{name}, #{phonetic}, #{firstPhonetic}, #{isIntercity}, #{longitude}, #{latitude}, #{cityCode}, #{districtCode}, #{createDate}, #{modifyDate})
+    </insert>
+</mapper>

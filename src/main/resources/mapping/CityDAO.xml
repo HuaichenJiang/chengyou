@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cy.chengyou.daos.CityDAO">
+
+    <sql id="city_columns">
+		ci.id,
+		ci.createDate,
+		ci.modifyDate,
+		ci.code,
+		ci.name,
+		ci.phonetic,
+		ci.firstPhonetic,
+		ci.longitude,
+		ci.latitude,
+		ci.provinceCode
+	</sql>
+
+    <resultMap id="City" type="com.cy.chengyou.dtos.City">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+        <result column="code" jdbcType="VARCHAR" property="code" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="phonetic" jdbcType="VARCHAR" property="phonetic" />
+        <result column="firstPhonetic" jdbcType="VARCHAR" property="firstPhonetic" />
+        <result column="longitude" property="longitude"/>
+        <result column="latitude" property="latitude"/>
+        <result column="provinceCode" jdbcType="VARCHAR" property="provinceCode"/>
+        <association property="province" column="{code=provinceCode}" foreignColumn="code" select="com.cy.chengyou.daos.ProvinceDAO.findProvince" fetchType="lazy">
+        </association>
+        <collection property="districtList" column="{cityCode=code}" select="com.cy.chengyou.daos.DistrictDAO.findDistrict" ofType="District" javaType="list" fetchType="lazy">
+        </collection>
+        <collection property="stationList" column="{cityCode=code}" select="com.cy.chengyou.daos.StationDAO.findStation" ofType="Station" javaType="list" fetchType="lazy">
+        </collection>
+        <collection property="airportList" column="{cityCode=code}" select="com.cy.chengyou.daos.AirportDAO.findAirport" ofType="Airport" javaType="list" fetchType="lazy">
+        </collection>
+    </resultMap>
+
+    <select id="findByCityId" resultMap="City">
+        select
+        <include refid="city_columns" />
+        from City ci where ci.id = #{id}
+    </select>
+
+    <select id="findCity" resultMap="City">
+        select
+        <include refid="city_columns" />
+        from city ci
+        <where>
+            <if test="cityCode != null">
+                and ci.code = #{cityCode}
+            </if>
+            <if test="cityName != null">
+                and ci.name like "%"#{cityName}"%"
+            </if>
+            <if test="phonetic != null">
+                and ci.phonetic like "%"#{phonetic}"%"
+            </if>
+            <if test="firstPhonetic != null">
+                and ci.firstPhonetic like "%"{firstPhonetic}"%"
+            </if>
+            <if test="provinceCode != null">
+                and ci.provinceCode = #{provinceCode}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertCity" parameterType="com.cy.chengyou.dtos.City">
+        insert into city(code, name, phonetic, firstPhonetic, longitude, latitude, provinceCode, createDate, modifyDate)
+        values (#{code}, #{name}, #{phonetic}, #{firstPhonetic}, #{longitude}, #{latitude}, #{provinceCode}, #{createDate}, #{modifyDate})
+    </insert>
+    
+    <update id="updateCity" parameterType="com.cy.chengyou.dtos.City">
+        update city set code = #{code}, name = #{name}, phonetic = #{phonetic}, firstPhonetic = #{firstPhonetic},
+        longitude = #{longitude}, latitude = #{latitude}, provinceCode = #{provinceCode}, modifyDate = now()
+        where id = #{id};
+    </update>
+
+    <delete id="deleteCity" parameterType="com.cy.chengyou.dtos.City">
+        delete from city where id = #{id}
+    </delete>
+
+</mapper>

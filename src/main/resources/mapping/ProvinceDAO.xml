@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cy.chengyou.daos.ProvinceDAO">
+
+    <sql id="pro_columns">
+		p.id,
+		p.createDate,
+		p.modifyDate,
+		p.code,
+		p.name,
+		p.phonetic,
+		p.firstPhonetic
+	</sql>
+
+    <resultMap id="Province" type="com.cy.chengyou.dtos.Province">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+        <result column="code" jdbcType="VARCHAR" property="code" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="phonetic" jdbcType="VARCHAR" property="phonetic" />
+        <result column="firstPhonetic" jdbcType="VARCHAR" property="firstPhonetic" />
+        <collection column="{provinceCode=code}" ofType="City" select="com.cy.chengyou.daos.CityDAO.findCity" property="cityList" javaType="list" fetchType="lazy"/>
+    </resultMap>
+
+    <select id="findByProId" resultMap="Province">
+        select
+        <include refid="pro_columns" />
+        from Province p
+        where p.id = #{id}
+    </select>
+
+    <select id="findProvince" resultMap="Province">
+        select
+        <include refid="pro_columns" />
+        from Province p
+        <where>
+            <if test="provinceCode != null">
+                and p.code = #{provinceCode}
+            </if>
+            <if test="provinceName != null">
+                and p.name like "%"#{provinceName}"%"
+            </if>
+            <if test="phonetic != null">
+                and p.phonetic like "%"#{phonetic}"%"
+            </if>
+            <if test="firstPhonetic != null">
+                and p.firstPhonetic like "%"#{firstPhonetic}"%"
+            </if>
+        </where>
+    </select>
+
+    <update id="updateProvince" parameterType="com.cy.chengyou.dtos.Province">
+        update Province set code = #{code}, name = {name}, phonetic = #{phonetic}, firstPhonetic = #{firstPhonetic}, modifyDate = now()
+        where id = #{id};
+    </update>
+
+    <insert id="insertProvince" parameterType="com.cy.chengyou.dtos.Province">
+        insert into Province(code, name, phonetic, firstPhonetic, createDate, modifyDate)
+        values (#{code}, #{name}, #{phonetic}, #{firstPhonetic}, #{createDate}, #{modifyDate})
+    </insert>
+
+    <delete id="deleteProvince" parameterType="com.cy.chengyou.dtos.Province">
+        delete from Province where id = #{id}
+    </delete>
+
+</mapper>

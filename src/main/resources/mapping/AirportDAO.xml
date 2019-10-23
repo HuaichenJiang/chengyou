@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cy.chengyou.daos.AirportDAO">
+    
+    <sql id="airport_columns">
+        air.id,
+		air.createDate,
+		air.modifyDate,
+		air.iataCode,
+		air.icaoCode,
+		air.name,
+		air.phonetic,
+		air.firstPhonetic,
+		air.longitude,
+		air.latitude,
+		air.cityCode,
+		air.districtCode
+    </sql>
+    
+    <resultMap id="Airport" type="com.cy.chengyou.dtos.Airport">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+        <result column="iataCode" jdbcType="VARCHAR" property="iataCode" />
+        <result column="icaoCode" jdbcType="VARCHAR" property="icaoCode" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="phonetic" jdbcType="VARCHAR" property="phonetic" />
+        <result column="firstPhonetic" jdbcType="VARCHAR" property="firstPhonetic" />
+        <result column="longitude" property="longitude"/>
+        <result column="latitude" property="latitude"/>
+        <result column="cityCode" jdbcType="VARCHAR" property="cityCode"/>
+        <association property="city" column="{cityCode=cityCode}" foreignColumn="code" select="com.cy.chengyou.daos.CityDAO.findCity" fetchType="lazy">
+        </association>
+        <association property="district" column="{districtCode=districtCode}" foreignColumn="code" select="com.cy.chengyou.daos.DistrictDAO.findDistrict" fetchType="lazy">
+        </association>
+    </resultMap>
+
+    <select id="findByAirId" resultMap="Airport">
+        select
+        <include refid="airport_columns"/>
+        from airport air where air.id = #{id}
+    </select>
+
+    <select id="findAirport" resultMap="Airport">
+        select
+        <include refid="airport_columns"/>
+        from airport air
+        <where>
+            <if test="iataCode != null">
+                and air.iataCode = #{iataCode}
+            </if>
+            <if test="icaoCode != null">
+                and air.icaoCode = #{icaoCode}
+            </if>
+            <if test="airportName != null">
+                and air.name = #{airportName}
+            </if>
+            <if test="cityCode != null">
+                and air.cityCode = #{cityCode}
+            </if>
+            <if test="districtCode != null">
+                and air.districtCode = #{districtCode}
+            </if>
+            <if test="phonetic != null">
+                and air.phonetic like "%"#{phonetic}"%"
+            </if>
+            <if test="firstPhonetic != null">
+                and air.firstPhonetic like "%"#{firstPhonetic}"%"
+            </if>
+        </where>
+    </select>
+
+</mapper>
