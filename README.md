@@ -3,11 +3,11 @@ Path planning system based on train
 
 This system is a mixed traffic path planning system.
 why we create that project?
-In today, many people have frequent cross city travel, but most of the time, there is no direct access between the two places.
+In nowdays, many people have frequent cross city travel, but most of the time, there is no direct access between the two places.
 Our system is aim to solve this problem.
 
 First step:
-The city.txt and the station.txt is the basic data.
+The city.txt and the station.txt are the basic data.
 You should create a database based on mysql, and create the table from mapping file.
 
 Second step:
