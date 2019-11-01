@@ -1,26 +1,35 @@
-package com.cy.chengyou.dtos;
+package com.cy.chengyou.datas;
 
-public class Station extends BaseDto {
+import com.cy.chengyou.dtos.BaseDto;
 
-    private String code;
+public class AirportData extends BaseDto {
+
+    private String iataCode;
+    private String icaoCode;
     private String name;
     private String phonetic;
     private String firstPhonetic;
-    private Boolean isIntercity;
     private Double longitude;
     private Double latitude;
     private String cityCode;
     private String districtCode;
-    private String grade;
-    private City city;
-    private District district;
+    private CityData cityData;
+    private DistrictData districtData;
 
-    public String getCode() {
-        return code;
+    public String getIataCode() {
+        return iataCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setIataCode(String iataCode) {
+        this.iataCode = iataCode;
+    }
+
+    public String getIcaoCode() {
+        return icaoCode;
+    }
+
+    public void setIcaoCode(String icaoCode) {
+        this.icaoCode = icaoCode;
     }
 
     public String getName() {
@@ -63,14 +72,6 @@ public class Station extends BaseDto {
         this.latitude = latitude;
     }
 
-    public Boolean getIntercity() {
-        return isIntercity;
-    }
-
-    public void setIntercity(Boolean intercity) {
-        isIntercity = intercity;
-    }
-
     public String getCityCode() {
         return cityCode;
     }
@@ -87,27 +88,19 @@ public class Station extends BaseDto {
         this.districtCode = districtCode;
     }
 
-    public City getCity() {
-        return city;
+    public CityData getCityData() {
+        return cityData;
     }
 
-    public void setCity(City city) {
-        this.city = city;
+    public void setCityData(CityData cityData) {
+        this.cityData = cityData;
     }
 
-    public District getDistrict() {
-        return district;
+    public DistrictData getDistrictData() {
+        return districtData;
     }
 
-    public void setDistrict(District district) {
-        this.district = district;
-    }
-
-    public String getGrade() {
-        return grade;
-    }
-
-    public void setGrade(String grade) {
-        this.grade = grade;
+    public void setDistrictData(DistrictData districtData) {
+        this.districtData = districtData;
     }
 }

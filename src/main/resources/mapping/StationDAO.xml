@@ -13,7 +13,8 @@
 		st.longitude,
 		st.latitude,
 		st.cityCode,
-		st.districtCode
+		st.districtCode,
+		st.grade
     </sql>
 
     <resultMap id="Station" type="com.cy.chengyou.dtos.Station">
@@ -29,6 +30,7 @@
         <result column="latitude" property="latitude"/>
         <result column="cityCode" jdbcType="VARCHAR" property="cityCode"/>
         <result column="districtCode" jdbcType="VARCHAR" property="districtCode"/>
+        <result column="grade" jdbcType="VARCHAR" property="grade"/>
         <association property="city" column="{cityCode=cityCode}" foreignColumn="code" select="com.cy.chengyou.daos.CityDAO.findCity" fetchType="lazy">
         </association>
         <association property="district" column="{districtCode=districtCode}" foreignColumn="code" select="com.cy.chengyou.daos.DistrictDAO.findDistrict" fetchType="lazy">
@@ -71,7 +73,7 @@
     </select>
 
     <insert id="insertStation" parameterType="com.cy.chengyou.dtos.Station">
-        insert into Station(code, name, phonetic, firstPhonetic, isIntercity, longitude, latitude, cityCode, districtCode, createDate, modifyDate)
-        values (#{code}, #{name}, #{phonetic}, #{firstPhonetic}, #{isIntercity}, #{longitude}, #{latitude}, #{cityCode}, #{districtCode}, #{createDate}, #{modifyDate})
+        insert into Station(code, name, phonetic, firstPhonetic, isIntercity, longitude, latitude, cityCode, districtCode, createDate, modifyDate, grade)
+        values (#{code}, #{name}, #{phonetic}, #{firstPhonetic}, #{isIntercity}, #{longitude}, #{latitude}, #{cityCode}, #{districtCode}, #{createDate}, #{modifyDate}, #{grade})
     </insert>
 </mapper>

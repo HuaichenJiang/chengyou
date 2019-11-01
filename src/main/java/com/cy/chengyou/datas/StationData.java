@@ -1,17 +1,20 @@
 package com.cy.chengyou.datas;
 
-import com.cy.chengyou.dtos.*;
+import com.cy.chengyou.dtos.BaseDto;
 
-public class CityData extends BaseDto {
+public class StationData extends BaseDto {
 
     private String code;
     private String name;
     private String phonetic;
     private String firstPhonetic;
+    private Boolean isIntercity;
     private Double longitude;
     private Double latitude;
-    private String provinceCode;
-    private ProvinceData provinceData;
+    private String cityCode;
+    private CityData cityData;
+    private String districtCode;
+    private DistrictData districtData;
 
     public String getCode() {
         return code;
@@ -19,6 +22,14 @@ public class CityData extends BaseDto {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Boolean getIntercity() {
+        return isIntercity;
+    }
+
+    public void setIntercity(Boolean intercity) {
+        isIntercity = intercity;
     }
 
     public String getName() {
@@ -61,19 +72,35 @@ public class CityData extends BaseDto {
         this.latitude = latitude;
     }
 
-    public String getProvinceCode() {
-        return provinceCode;
+    public String getCityCode() {
+        return cityCode;
     }
 
-    public void setProvinceCode(String provinceCode) {
-        this.provinceCode = provinceCode;
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
     }
 
-    public ProvinceData getProvinceData() {
-        return provinceData;
+    public CityData getCityData() {
+        return cityData;
     }
 
-    public void setProvinceData(ProvinceData provinceData) {
-        this.provinceData = provinceData;
+    public void setCityData(CityData cityData) {
+        this.cityData = cityData;
+    }
+
+    public String getDistrictCode() {
+        return districtCode;
+    }
+
+    public void setDistrictCode(String districtCode) {
+        this.districtCode = districtCode;
+    }
+
+    public DistrictData getDistrictData() {
+        return districtData;
+    }
+
+    public void setDistrictData(DistrictData districtData) {
+        this.districtData = districtData;
     }
 }

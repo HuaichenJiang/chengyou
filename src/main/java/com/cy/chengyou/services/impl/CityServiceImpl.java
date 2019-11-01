@@ -2,10 +2,10 @@ package com.cy.chengyou.services.impl;
 
 import com.cy.chengyou.daos.CityDAO;
 import com.cy.chengyou.datas.CityData;
+import com.cy.chengyou.datas.ProvinceData;
 import com.cy.chengyou.dtos.City;
 import com.cy.chengyou.pojos.CityPojo;
 import com.cy.chengyou.services.CityService;
-import com.cy.chengyou.utils.FileReadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,5 +45,8 @@ public class CityServiceImpl implements CityService {
         cityData.setPhonetic(city.getPhonetic());
         cityData.setFirstPhonetic(city.getFirstPhonetic());
         cityData.setName(city.getName());
+        ProvinceData provinceData = new ProvinceData();
+        ProvinceServiceImpl.transformation(city.getProvince(), provinceData);
+        cityData.setProvinceData(provinceData);
     }
 }

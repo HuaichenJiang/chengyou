@@ -1,6 +1,9 @@
 package com.cy.chengyou.services;
 
+import com.cy.chengyou.datas.StationData;
+
 public interface StationService {
 
-    void initStation();
+    StationData findById(String id);
+
 }

@@ -2,15 +2,12 @@ package com.cy.chengyou.datas;
 
 import com.cy.chengyou.dtos.BaseDto;
 
-import java.util.List;
-
 public class ProvinceData extends BaseDto {
 
     private String code;
     private String name;
     private String phonetic;
     private String firstPhonetic;
-    private List<CityData> cityDataList;
 
 
     public String getCode() {
@@ -45,11 +42,4 @@ public class ProvinceData extends BaseDto {
         this.firstPhonetic = firstPhonetic;
     }
 
-    public List<CityData> getCityDataList() {
-        return cityDataList;
-    }
-
-    public void setCityDataList(List<CityData> cityDataList) {
-        this.cityDataList = cityDataList;
-    }
 }

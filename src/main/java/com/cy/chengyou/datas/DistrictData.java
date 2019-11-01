@@ -1,8 +1,8 @@
 package com.cy.chengyou.datas;
 
-import com.cy.chengyou.dtos.*;
+import com.cy.chengyou.dtos.BaseDto;
 
-public class CityData extends BaseDto {
+public class DistrictData extends BaseDto {
 
     private String code;
     private String name;
@@ -10,8 +10,8 @@ public class CityData extends BaseDto {
     private String firstPhonetic;
     private Double longitude;
     private Double latitude;
-    private String provinceCode;
-    private ProvinceData provinceData;
+    private String cityCode;
+    private CityData cityData;
 
     public String getCode() {
         return code;
@@ -61,19 +61,20 @@ public class CityData extends BaseDto {
         this.latitude = latitude;
     }
 
-    public String getProvinceCode() {
-        return provinceCode;
+    public String getCityCode() {
+        return cityCode;
     }
 
-    public void setProvinceCode(String provinceCode) {
-        this.provinceCode = provinceCode;
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
     }
 
-    public ProvinceData getProvinceData() {
-        return provinceData;
+    public CityData getCityData() {
+        return cityData;
     }
 
-    public void setProvinceData(ProvinceData provinceData) {
-        this.provinceData = provinceData;
+    public void setCityData(CityData cityData) {
+        this.cityData = cityData;
     }
+
 }
