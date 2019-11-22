@@ -24,6 +24,11 @@ public class StationServiceImpl implements StationService {
         return stationData;
     }
 
+    /**
+     * 将数据库对象Station转换成接口交互对象stationData
+     * @param station
+     * @param stationData
+     */
     public static void transformation(Station station, StationData stationData){
         stationData.setId(station.getId());
         stationData.setCreateDate(station.getCreateDate());

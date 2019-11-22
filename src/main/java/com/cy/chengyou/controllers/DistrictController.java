@@ -14,6 +14,11 @@ public class DistrictController {
     @Autowired
     private DistrictService districtService;
 
+    /**
+     * 查询区县信息
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/findById/{id}")
     public DistrictData findById(@PathVariable String id) {
         return districtService.findById(id);

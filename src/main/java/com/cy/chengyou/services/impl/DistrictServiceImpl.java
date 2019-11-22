@@ -22,6 +22,11 @@ public class DistrictServiceImpl implements DistrictService {
         return null;
     }
 
+    /**
+     * 将数据库区县对象District转换成接口交互对象DistrictData
+     * @param district
+     * @param districtData
+     */
     public static void transformation(District district, DistrictData districtData) {
         districtData.setId(district.getId());
         districtData.setCreateDate(district.getCreateDate());

@@ -10,8 +10,11 @@ public class InitController {
     @Autowired
     private InitService initService;
 
+    /**
+     * 请求此接口初始化数据
+     */
     @RequestMapping(value = "/initData")
     public void initData() {
-
+        initService.initData();
     }
 }

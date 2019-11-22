@@ -17,11 +17,21 @@ public class ProvinceController {
     ProvinceService provinceService;
     private static final Logger LOG = LoggerFactory.getLogger(ProvinceController.class);
 
+    /**
+     * 通过id查询省份信息
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/findById/{id}")
     public ProvinceData findById(@PathVariable String id) {
         return provinceService.findById(id);
     }
 
+    /**
+     * 查询省份信息
+     * @param provincePojo
+     * @return
+     */
     @RequestMapping(value = "/findProvince")
     public List<ProvinceData> findProvince(@RequestBody ProvincePojo provincePojo) {
         return provinceService.findProvince(provincePojo);

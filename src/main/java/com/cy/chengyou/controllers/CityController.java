@@ -15,13 +15,23 @@ import java.util.List;
 @RequestMapping(value = "/city")
 public class CityController {
     @Autowired
-    CityService cityService;
+    private CityService cityService;
 
+    /**
+     * 通过id请求城市信息
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/findById/{id}")
     public CityData findById(@PathVariable String id) {
         return cityService.findById(id);
     }
 
+    /**
+     * 查询城市信息
+     * @param cityPojo
+     * @return
+     */
     @RequestMapping(value = "/findCity")
     public List<CityData> findCity(@RequestBody CityPojo cityPojo) {
         return cityService.findCity(cityPojo);

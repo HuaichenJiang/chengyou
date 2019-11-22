@@ -37,6 +37,11 @@ public class CityServiceImpl implements CityService {
         return cityDataList;
     }
 
+    /**
+     * 将数据库对象City转换成接口交互对象CityData
+     * @param city
+     * @param cityData
+     */
     public static void transformation(City city, CityData cityData) {
         cityData.setId(city.getId());
         cityData.setCode(city.getCode());

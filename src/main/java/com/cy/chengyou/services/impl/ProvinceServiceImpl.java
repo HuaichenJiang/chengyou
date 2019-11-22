@@ -36,6 +36,11 @@ public class ProvinceServiceImpl implements ProvinceService {
         return provinceDataList;
     }
 
+    /**
+     * 将数据库对象Province转换成接口交互对象ProvinceData
+     * @param province
+     * @param provinceData
+     */
     public static void transformation(Province province, ProvinceData provinceData) {
         provinceData.setId(province.getId());
         provinceData.setCode(province.getCode());

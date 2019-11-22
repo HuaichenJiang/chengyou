@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author HuaichenJiang
  * @Title
- * @Description
+ * @Description 使用Spring aop的前置与后置通知，对请求与返回信息进行统一日志打印
  * @date 2018/11/9  12:00
  */
 @Aspect
@@ -31,7 +31,7 @@ public class WebLogAspect {
     public void webLog(){}
 
     /**
-     *
+     * 打印请求相关信息
      * @param joinPoint
      * @throws Throwable
      */
@@ -63,7 +63,7 @@ public class WebLogAspect {
     }
 
     /**
-     *
+     * 打印返回相关信息
      * @param ret
      * @throws Throwable
      */

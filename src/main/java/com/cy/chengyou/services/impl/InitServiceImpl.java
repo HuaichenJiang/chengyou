@@ -1,9 +1,6 @@
 package com.cy.chengyou.services.impl;
 
-import com.cy.chengyou.daos.CityDAO;
-import com.cy.chengyou.daos.DistrictDAO;
-import com.cy.chengyou.daos.ProvinceDAO;
-import com.cy.chengyou.daos.StationDAO;
+import com.cy.chengyou.daos.*;
 import com.cy.chengyou.services.InitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +13,10 @@ public class InitServiceImpl implements InitService {
     private CityDAO cityDAO;
     @Autowired
     private DistrictDAO districtDAO;
-
+    @Autowired
     private StationDAO stationDAO;
+    @Autowired
+    private AirportDAO airportDAO;
 
     @Override
     public void initData() {

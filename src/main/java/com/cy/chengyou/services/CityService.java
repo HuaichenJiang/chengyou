@@ -7,8 +7,18 @@ import java.util.List;
 
 public interface CityService {
 
+    /**
+     * 通过id请求城市信息
+     * @param id
+     * @return
+     */
     CityData findById(String id);
 
+    /**
+     * 查询城市信息
+     * @param cityPojo
+     * @return
+     */
     List<CityData> findCity(CityPojo cityPojo);
 
 }

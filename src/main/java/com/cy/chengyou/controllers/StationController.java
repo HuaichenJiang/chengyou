@@ -13,6 +13,11 @@ public class StationController {
     @Autowired
     private StationService stationService;
 
+    /**
+     * 通过id查询火车站点信息
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/findById/{id}")
     public StationData findById(@PathVariable String id) {
         return stationService.findById(id);
