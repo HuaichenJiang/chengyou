@@ -3,10 +3,21 @@ package com.cy.chengyou.services.impl;
 import com.cy.chengyou.daos.DistrictDAO;
 import com.cy.chengyou.datas.CityData;
 import com.cy.chengyou.datas.DistrictData;
+import com.cy.chengyou.dtos.City;
 import com.cy.chengyou.dtos.District;
+import com.cy.chengyou.dtos.Province;
+import com.cy.chengyou.pojos.CityPojo;
+import com.cy.chengyou.pojos.DistrictPojo;
+import com.cy.chengyou.pojos.baidu.BaiDuResponsePojo;
 import com.cy.chengyou.services.DistrictService;
+import com.cy.chengyou.utils.SerializeUtil;
+import com.cy.chengyou.utils.StaticConstant;
+import com.cy.chengyou.utils.requestutils.GetNetUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 @Service
 public class DistrictServiceImpl implements DistrictService {
@@ -19,7 +30,39 @@ public class DistrictServiceImpl implements DistrictService {
         District district = districtDAO.findDisById(id);
         DistrictData districtData = new DistrictData();
         transformation(district, districtData);
+        return districtData;
+    }
+
+    @Override
+    public List<DistrictData> findDistrict(DistrictPojo districtPojo) {
         return null;
+    }
+
+    @Override
+    public void getDistrictCoordinate() {
+        DistrictPojo districtPojo = new DistrictPojo();
+        List<District> districtList = districtDAO.findDistrict(districtPojo);
+        String ak = "";
+        for (District district : districtList) {
+            City city = district.getCity();
+            Province province = city.getProvince();
+            String cityStr = "";
+            if (StringUtils.isEmpty(city.getName())) {
+                cityStr = province.getName() + district.getName() + "政府";
+            } else {
+                cityStr = province.getName() + city.getName() + district.getName() +"政府";
+            }
+            String URL = "http://api.map.baidu.com/geocoding/v3/?address=" + cityStr + "&output=json&ak=" + ak;
+            try {
+                String response = GetNetUtil.httpGet(URL, StaticConstant.ENCODING_UTF_8);
+                BaiDuResponsePojo baiDuResponsePojo = SerializeUtil.deserializeToJsonByObjectMapper(response, BaiDuResponsePojo.class);
+                district.setLatitude(baiDuResponsePojo.getResult().getLocation().getLat());
+                district.setLongitude(baiDuResponsePojo.getResult().getLocation().getLng());
+                districtDAO.updateDistrict(district);
+            } catch (Exception e) {
+
+            }
+        }
     }
 
     /**

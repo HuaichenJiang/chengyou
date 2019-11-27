@@ -34,7 +34,7 @@
         </collection>
     </resultMap>
 
-    <select id="findByDisId" resultMap="District">
+    <select id="findDisById" resultMap="District">
         select
         <include refid="district_columns"/>
         from district di where di.id = #{id}

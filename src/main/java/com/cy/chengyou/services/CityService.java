@@ -21,4 +21,9 @@ public interface CityService {
      */
     List<CityData> findCity(CityPojo cityPojo);
 
+    /**
+     * 从百度地图api获取城市坐标
+     */
+    void getCityCoordinate();
+
 }

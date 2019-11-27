@@ -26,7 +26,7 @@
         <result column="longitude" property="longitude"/>
         <result column="latitude" property="latitude"/>
         <result column="provinceCode" jdbcType="VARCHAR" property="provinceCode"/>
-        <association property="province" column="{code=provinceCode}" foreignColumn="code" select="com.cy.chengyou.daos.ProvinceDAO.findProvince" fetchType="lazy">
+        <association property="province" column="{provinceCode=provinceCode}" foreignColumn="code" select="com.cy.chengyou.daos.ProvinceDAO.findProvince" fetchType="lazy">
         </association>
         <collection property="districtList" column="{cityCode=code}" select="com.cy.chengyou.daos.DistrictDAO.findDistrict" ofType="District" javaType="list" fetchType="lazy">
         </collection>

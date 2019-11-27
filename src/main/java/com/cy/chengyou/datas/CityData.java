@@ -1,9 +1,12 @@
 package com.cy.chengyou.datas;
 
-import com.cy.chengyou.dtos.*;
+import java.util.Date;
 
-public class CityData extends BaseDto {
+public class CityData {
 
+    private Integer id;
+    private Date createDate;
+    private Date modifyDate;
     private String code;
     private String name;
     private String phonetic;
@@ -12,6 +15,30 @@ public class CityData extends BaseDto {
     private Double latitude;
     private String provinceCode;
     private ProvinceData provinceData;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getModifyDate() {
+        return modifyDate;
+    }
+
+    public void setModifyDate(Date modifyDate) {
+        this.modifyDate = modifyDate;
+    }
 
     public String getCode() {
         return code;

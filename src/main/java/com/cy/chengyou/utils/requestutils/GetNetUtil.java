@@ -1,12 +1,17 @@
 package com.cy.chengyou.utils.requestutils;
- 
+
+import org.apache.http.HttpEntity;
+import org.apache.http.ParseException;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -62,46 +67,48 @@ public class GetNetUtil {
  
 	/**
 	 * get请求
-	 * @param urlAll :请求接口
+	 * @param url :请求接口
 	 * @param charset :字符编码
 	 * @return 返回json结果
 	 */
-	public static String doGet(String urlAll, String charset) {
-		BufferedReader reader = null;
-		String result = null;
-		StringBuffer sbf = new StringBuffer();
-		// 模拟浏览器
-		String userAgent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.66 Safari/537.36";
+	public static String httpGet(final String url, final String charset) {
+		// 获得Http客户端
+		LOGGER.info("request url : {}", url);
+		String result = "";
+		CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+		// 创建Get请求
+		HttpGet httpGet = new HttpGet(url);
+		// 响应模型
+		CloseableHttpResponse response = null;
 		try {
-			trustAllHttpsCertificates();
-			HostnameVerifier hv = new HostnameVerifier() {
-				@Override
-				public boolean verify(String urlHostName, SSLSession session) {
-					LOGGER.info("Warning: URL Host: {} vs. {}", urlHostName, session.getPeerHost());
-					return true;
-				}
-			};
-			HttpsURLConnection.setDefaultHostnameVerifier(hv);
-			URL url = new URL(urlAll);
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestMethod("GET");
-			connection.setReadTimeout(30000);
-			connection.setConnectTimeout(30000);
-			connection.setRequestProperty("User-agent", userAgent);
-			connection.connect();
-			InputStream is = connection.getInputStream();
-			reader = new BufferedReader(new InputStreamReader(is, charset));
-			String strRead = null;
-			while ((strRead = reader.readLine()) != null) {
-				sbf.append(strRead);
-				sbf.append("\r\n");
+			// 由客户端执行(发送)Get请求
+			response = httpClient.execute(httpGet);
+			// 从响应模型中获取响应实体
+			HttpEntity responseEntity = response.getEntity();
+			if (responseEntity != null) {
+				LOGGER.info("响应内容长度为 : {}", responseEntity.getContentLength());
+				result = EntityUtils.toString(responseEntity, charset);
 			}
-			reader.close();
-			result = sbf.toString();
- 
-		} catch (Exception e) {
+		} catch (ClientProtocolException e) {
 			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				// 释放资源
+				if (httpClient != null) {
+					httpClient.close();
+				}
+				if (response != null) {
+					response.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+		LOGGER.info("response data : {}", result);
 		return result;
 	}
 

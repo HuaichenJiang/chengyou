@@ -1,4 +1,4 @@
-package com.cy.chengyou.pojos;
+package com.cy.chengyou.pojos.http;
 
 import com.cy.chengyou.utils.StaticConstant;
 import org.apache.http.protocol.HTTP;

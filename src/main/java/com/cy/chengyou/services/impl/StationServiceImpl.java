@@ -5,10 +5,14 @@ import com.cy.chengyou.datas.CityData;
 import com.cy.chengyou.datas.DistrictData;
 import com.cy.chengyou.datas.StationData;
 import com.cy.chengyou.dtos.Station;
+import com.cy.chengyou.pojos.StationPojo;
 import com.cy.chengyou.services.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class StationServiceImpl implements StationService {
@@ -22,6 +26,18 @@ public class StationServiceImpl implements StationService {
         StationData stationData = new StationData();
         transformation(station, stationData);
         return stationData;
+    }
+
+    @Override
+    public List<StationData> findStation(StationPojo stationPojo) {
+        List<Station> stationList = stationDAO.findStation(stationPojo);
+        List<StationData> stationDataList = new ArrayList<>();
+        for (Station station : stationList) {
+            StationData stationData = new StationData();
+            transformation(station, stationData);
+            stationDataList.add(stationData);
+        }
+        return stationDataList;
     }
 
     /**

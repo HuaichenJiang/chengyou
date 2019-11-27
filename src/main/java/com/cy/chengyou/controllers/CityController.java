@@ -37,4 +37,14 @@ public class CityController {
         return cityService.findCity(cityPojo);
     }
 
+    /**
+     * 更新城市经纬度
+     * @return
+     */
+    @RequestMapping(value = "/getCityCoordinate")
+    public String getCityCoordinate() {
+        cityService.getCityCoordinate();
+        return "success";
+    }
+
 }
