@@ -11,6 +11,8 @@
 		<module>chengyou-user</module>
 		<module>chengyou-common</module>
 		<module>chengyou-worm</module>
+		<module>chengyou-train</module>
+		<module>chengyou-airplane</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -72,34 +74,6 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
-		</dependency>
-		<!--ftp-->
-		<dependency>
-			<groupId>commons-net</groupId>
-			<artifactId>commons-net</artifactId>
-			<version>3.3</version>
-		</dependency>
-		<!--jcraft实现和远程服务器交互，sftp-->
-		<dependency>
-			<groupId>com.jcraft</groupId>
-			<artifactId>jsch</artifactId>
-			<version>0.1.54</version>
-		</dependency>
-		<!-- apache http -->
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient-cache</artifactId>
-			<version>4.1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpmime</artifactId>
-			<version>4.1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.5.5</version>
 		</dependency>
 	</dependencies>
 
