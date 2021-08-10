@@ -1,0 +1,25 @@
+server:
+  port: 9012
+
+#连接字符串中serverTimezone=UTC会出现时区问题，需改成serverTimezone=Hongkong
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/chengyou?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Hongkong
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath*:mapping/*DAO.xml
+  type-aliases-package: com.cy.chengyou.dtos
+  configuration:
+    aggressive-lazy-loading: false
+    lazy-loading-enabled: true
+
+#showSql
+logging:
+  level:
+    com:
+      cy:
+        chengyou :
+          daos: DEBUG
